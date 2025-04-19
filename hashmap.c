@@ -39,9 +39,19 @@ int is_equal(void* key1, void* key2){
 }
 
 
-void insertMap(HashMap * map, char * key, void * value) {
-
-
+void insertMap(HashMap * map, char * key, void * value) {    
+    int pos = hash(key, map -> capacity);
+    if (map -> buckets[pos] == NULL || map -> buckets[pos] -> key == NULL) {
+        map -> buckets[pos] = createPair(key, value);
+        return;
+    }
+    while (map -> buckets[pos] != NULL) {
+        if (strcmp(map -> buckets[pos] -> key, key) == 0) return;
+        pos = (pos + 1) % (map -> capacity);
+    }
+    map -> buckets[pos] = createPair(key, value);
+    (map -> size)++;
+    return;
 }
 
 void enlarge(HashMap * map) {
@@ -52,27 +62,64 @@ void enlarge(HashMap * map) {
 
 
 HashMap * createMap(long capacity) {
-
-    return NULL;
+    HashMap *mapa = malloc(sizeof(HashMap));
+    if (mapa == NULL) {
+        puts("Error al asignar memoria para el mapa hash");
+        exit(EXIT_FAILURE);
+    }
+    mapa -> buckets = calloc(capacity,sizeof(Pair *));
+    if (mapa->buckets == NULL) {
+        puts("Error al asignar memoria para el array de pares");
+        free(mapa);
+        exit(EXIT_FAILURE);
+    }
+    mapa -> size = 0;
+    mapa -> capacity = capacity;
+    return mapa;
 }
 
 void eraseMap(HashMap * map,  char * key) {    
-
-
+    int pos = hash(key, map -> capacity);
+    while (map -> buckets[pos] != NULL) {
+        if (strcmp(map -> buckets[pos] -> key,key) == 0) {
+            map -> buckets[pos] -> key = NULL;
+            (map -> size)--;
+            return;
+        }
+        pos = (pos + 1) % map -> capacity;
+    }   
 }
 
-Pair * searchMap(HashMap * map,  char * key) {   
-
-
+Pair * searchMap(HashMap * map,  char * key) {  
+    int pos = hash(key, map -> capacity);
+    while (map -> buckets[pos] != NULL) {
+        if (strcmp(map -> buckets[pos] -> key, key) == 0) {
+            map -> current = pos;
+            return map -> buckets[pos];
+        }
+        pos = (pos + 1) % map -> capacity;
+    }
     return NULL;
 }
 
 Pair * firstMap(HashMap * map) {
-
+    for (int i = 0 ; i < map -> capacity ; i++) {
+        if (map -> buckets[i] != NULL && map -> buckets[i] -> key != NULL) {
+            map -> current = i;
+            return map -> buckets[i];
+        }
+    }
     return NULL;
 }
 
 Pair * nextMap(HashMap * map) {
-
+    int pos = ((map -> current) + 1) % map -> capacity;
+    while (pos != map -> current) {
+        if (map -> buckets[pos] != NULL && map -> buckets[pos] -> key != NULL) {
+            map -> current = pos;
+            return map -> buckets[pos]; 
+        }
+        pos = (pos + 1) % map -> capacity;
+    }
     return NULL;
 }

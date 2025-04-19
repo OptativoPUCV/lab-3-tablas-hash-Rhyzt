@@ -107,10 +107,14 @@ Pair *firstMap(HashMap *map) {
 
 Pair *nextMap(HashMap *map) {
     if (map -> current == -1) return NULL;
-    for (int i = 0 ; i < map -> capacity ; i++)
-        if (map -> buckets[i] != NULL && map -> buckets[i] -> key != NULL) {
-            map -> current = i;
-            return map -> buckets[i]; 
+    int inicio = map -> current;
+    int pos = ((map -> current) + 1) % map -> capacity;
+    while (pos != inicio) {
+        if (map -> buckets[pos] != NULL && map -> buckets[pos] -> key != NULL) {
+            map -> current = pos;
+            return map -> buckets[pos]; 
         }
+        pos = (pos + 1) % map -> capacity;
+    }
     return NULL;
 }

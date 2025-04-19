@@ -63,16 +63,7 @@ void enlarge(HashMap * map) {
 
 HashMap * createMap(long capacity) {
     HashMap *mapa = malloc(sizeof(HashMap));
-    if (mapa == NULL) {
-        puts("Error al asignar memoria para el mapa hash");
-        exit(EXIT_FAILURE);
-    }
     mapa -> buckets = calloc(capacity,sizeof(Pair *));
-    if (mapa->buckets == NULL) {
-        puts("Error al asignar memoria para el array de pares");
-        free(mapa);
-        exit(EXIT_FAILURE);
-    }
     mapa -> size = 0;
     mapa -> capacity = capacity;
     return mapa;

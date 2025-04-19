@@ -108,6 +108,7 @@ Pair *firstMap(HashMap *map) {
 Pair *nextMap(HashMap *map) {
     if (map -> current == -1) return NULL;
     int inicio = map -> current;
+    puts(map -> buckets[map -> current] -> key);
     int pos = ((map -> current) + 1) % map -> capacity;
     while (pos != inicio) { 
         if (map -> buckets[pos] != NULL && map -> buckets[pos] -> key != NULL) {

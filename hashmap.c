@@ -113,6 +113,8 @@ Pair *nextMap(HashMap *map) {
         printf("%d %d \n", inicio, pos);
         puts(map -> buckets[pos] -> key);
         if (map -> buckets[pos] != NULL && map -> buckets[pos] -> key != NULL) {
+            printf("%d %d \n", inicio, pos);
+            puts(map -> buckets[pos] -> key);
             map -> current = pos;
             return map -> buckets[pos];
         }

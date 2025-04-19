@@ -111,6 +111,7 @@ Pair *nextMap(HashMap *map) {
     int pos = ((map -> current) + 1) % map -> capacity;
     while (pos != inicio) { 
         printf("%d %d \n", inicio, pos);
+        puts(map -> buckets[pos] -> key);
         if (map -> buckets[pos] != NULL && map -> buckets[pos] -> key != NULL) {
             map -> current = pos;
             return map -> buckets[pos];

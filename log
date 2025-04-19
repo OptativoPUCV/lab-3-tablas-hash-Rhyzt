@@ -40,3 +40,14 @@ Fri, Apr 18, 2025 10:15:47 PM:
  tests:  15|2
 total_score: 50/70
 bc21813
+Fri, Apr 18, 2025 10:26:46 PM: 
+ hashmap.c | 6 +-----
+ 1 file changed, 1 insertion(+), 5 deletions(-)
+Compilation failed
+In file included from test.c:4:0:
+hashmap.c: In function 'nextMap':
+hashmap.c:111:28: error: 'pos' undeclared (first use in this function)
+         if (map -> buckets[pos] != NULL && map -> buckets[pos] -> key != NULL) {
+                            ^~~
+hashmap.c:111:28: note: each undeclared identifier is reported only once for each function it appears in
+5a9ab85

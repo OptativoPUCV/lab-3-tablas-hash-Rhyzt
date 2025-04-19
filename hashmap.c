@@ -95,7 +95,7 @@ Pair * searchMap(HashMap * map,  char * key) {
     return NULL;
 }
 
-Pair * firstMap(HashMap * map) {
+Pair *firstMap(HashMap *map) {
     for (int i = 0 ; i < map -> capacity ; i++) {
         if (map -> buckets[i] != NULL && map -> buckets[i] -> key != NULL) {
             map -> current = i;
@@ -105,16 +105,12 @@ Pair * firstMap(HashMap * map) {
     return NULL;
 }
 
-Pair * nextMap(HashMap * map) {
+Pair *nextMap(HashMap *map) {
     if (map -> current == -1) return NULL;
-    int inicio = map -> current;
-    int pos = ((map -> current) + 1) % map -> capacity;
-    while (pos != inicio) {
+    for (int i = 0 ; i < map -> capacity ; i++)
         if (map -> buckets[pos] != NULL && map -> buckets[pos] -> key != NULL) {
             map -> current = pos;
             return map -> buckets[pos]; 
         }
-        pos = (pos + 1) % map -> capacity;
-    }
     return NULL;
 }

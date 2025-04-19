@@ -57,8 +57,19 @@ void insertMap(HashMap * map, char * key, void * value) {
 
 void enlarge(HashMap * map) {
     enlarge_called = 1; //no borrar (testing purposes)
-
-
+    Pair **arrayAntiguo = map -> buckets;
+    (map -> capacity) *= 2;
+    map -> size = 0;
+    map -> current = -1;
+    Pair **arrayNuevo = calloc(map -> capacity, sizeof(Pair));
+    map -> buckets = arrayNuevo;
+    for(int i = 0 ; i < (map -> capacity)/2 ; i++) {
+        if(arrayAntiguo[i] != NULL && arrayAntiguo[i] -> key != NULL) {
+            insertMap(map, arrayAntiguo[i] -> key, arrayAntiguo[i] -> value);
+            free(arrayAntiguo[i]);
+        }
+    }
+    free(arrayAntiguo);
 }
 
 

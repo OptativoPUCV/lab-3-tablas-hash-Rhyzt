@@ -43,13 +43,15 @@ void insertMap(HashMap * map, char * key, void * value) {
     int pos = hash(key, map -> capacity);
     if (map -> buckets[pos] == NULL || map -> buckets[pos] -> key == NULL) {
         map -> buckets[pos] = createPair(key, value);
-        return;
+        (map -> size)++;
     }
-    while (map -> buckets[pos] != NULL) {
-        if (strcmp(map -> buckets[pos] -> key, key) == 0) return;
-        pos = (pos + 1) % (map -> capacity);
+    else {
+        while (map -> buckets[pos] != NULL) {
+            if (strcmp(map -> buckets[pos] -> key, key) == 0) return;
+            pos = (pos + 1) % (map -> capacity);
+        }
+        map -> buckets[pos] = createPair(key, value);
     }
-    map -> buckets[pos] = createPair(key, value);
     (map -> size)++;
     return;
 }
